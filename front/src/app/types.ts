@@ -1,20 +1,20 @@
 export interface IProduct {
-  id?: number;
+  id: number;
   name: string;
-  description: string;
   price: number;
+  description: string;
+  image: string;
+  categoryId: number;
   stock: number;
-  image?: string;
-  categoryId?: number;
 }
 
-interface ICategory {
+export interface ICategory {
   id: number;
   name: string;
   products: IProduct[];
 }
 
-interface IOrder {
+export interface IOrder {
   id: number;
   status: string;
   date: Date;
@@ -22,12 +22,12 @@ interface IOrder {
   products: IProduct[];
 }
 
-enum eRol {
+export enum eRol {
   ADMIN = "admin",
   USER = "user",
 }
 
-interface IUser {
+export interface IUser {
   id: number;
   name: string;
   email: string;

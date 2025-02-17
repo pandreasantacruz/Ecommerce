@@ -1,21 +1,25 @@
 import React from "react";
-import { IProduct } from "../../types";
-
-export const Card: React.FC<IProduct> = ({
+interface CardProps {
+  name: string;
+  description: string;
+  image: string;
+  price: number;
+}
+export const Card: React.FC<CardProps> = ({
   name,
   description,
+  image,
   price,
-  stock,
 }) => {
   return (
     <div style={{ border: "1px solid #ccc", padding: "16px", width: "250px" }}>
       <h2>{name}</h2>
+      <div>
+        <img src={image} alt={name} />
+      </div>
       <p>{description}</p>
       <p>
         <strong>Precio:</strong> ${price}
-      </p>
-      <p>
-        <strong>Stock:</strong> {stock} unidades
       </p>
     </div>
   );
