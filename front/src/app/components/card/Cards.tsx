@@ -1,24 +1,33 @@
 "use client";
-import { IProduct } from "@/app/types";
+import { useRouter } from "next/navigation";
 import { Card } from "./Card";
-import productsSample from "../../../helpers/products";
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
+import { routes } from "@/app/routes/routes";
 
-const Cards: React.FC = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [products, setProducts] = useState<IProduct[]>(productsSample);
+interface CardsProps {
+  list: Record<string, any>[];
+}
+const Cards: FC<CardsProps> = ({ list }) => {
+  const [items, setItems] = useState<Record<string, any>[]>(list);
+  const router = useRouter();
+  const onClickItem = (id: string) => {
+    return () => {
+      return router.push(routes.product_detail + "/" + id);
+    };
+  };
 
   return (
     <div>
       <h1>Lista de Productos</h1>
       <div style={{ display: "flex", gap: "16px" }}>
-        {products.map((product, idx) => (
+        {items.map((items, idx) => (
           <Card
             key={idx}
-            description={product.description}
-            image={product.image}
-            name={product.name}
-            price={product.price}
+            description={items.description}
+            image={items.image}
+            name={items.name}
+            price={items.price}
+            onClick={onClickItem(items.id)}
           />
         ))}
       </div>

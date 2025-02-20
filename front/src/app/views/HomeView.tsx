@@ -1,10 +1,13 @@
 import React from "react";
 import Cards from "../components/card/Cards";
-const HomeView = () => {
+import { getProducts } from "../services/products";
+
+const HomeView = async () => {
+  const products = await getProducts();
   return (
     <div>
       HomeView
-      <Cards />
+      <Cards list={products} />
     </div>
   );
 };

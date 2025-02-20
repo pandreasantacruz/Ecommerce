@@ -1,4 +1,4 @@
-import { IProduct } from "../app/types";
+import { IProduct } from "../types";
 const productsSample: IProduct[] = [
   {
     id: 1,
