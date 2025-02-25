@@ -5,6 +5,11 @@ import React from "react";
 import { Formik } from "formik";
 import ButtonPrimary from "../components/buttons/buttonPrimary";
 import * as Yup from "yup";
+import { registerService } from "../services/auth";
+import { toast } from "react-toastify";
+import { routes } from "../routes/routes";
+import { useRouter } from "next/navigation";
+import usePublic from "../hooks/usePublic";
 
 const RegisterSchema = Yup.object().shape({
   name: Yup.string()
@@ -38,20 +43,38 @@ interface FormData {
   address: string;
   phone: string;
 }
+//Formika ya valida la info y se ejecuta esto si esta bien
 const Register = () => {
+  usePublic();
+  const router = useRouter();
   const handleOnSubmit = async (values: FormData) => {
-    console.log("Submit Exitoso", values);
+    try {
+      await registerService(values);
+      toast.success("Registro Exitoso");
+      setTimeout(() => {
+        router.push(routes.login);
+      }, 3050);
+    } catch (error) {
+      console.warn("error al registrarse", error);
+      toast.error("El registro no pudo completarse ");
+    }
   };
+
   return (
     <div>
       <h1>Register</h1>
       <Formik
         initialValues={{
-          email: "",
-          password: "",
-          name: "",
-          address: "",
-          phone: "",
+          email: "paulasantacruz45@gmail.com",
+          password: "12345abc",
+          name: "Paula Santacruz",
+          address: "Calle 15#15-27Bogota",
+          phone: "3152654752",
+          // email: "",
+          // password: "",
+          // name: "",
+          // address: "",
+          // phone: "",
         }}
         validationSchema={RegisterSchema}
         onSubmit={handleOnSubmit}

@@ -1,4 +1,3 @@
-import HomeView from "./views/HomeView";
 export default function Home() {
-  return <HomeView />;
+  return <p>Aqui va landing</p>;
 }

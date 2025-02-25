@@ -5,6 +5,12 @@ import React from "react";
 import { Formik } from "formik";
 import ButtonPrimary from "../components/buttons/buttonPrimary";
 import * as Yup from "yup";
+import { loginService } from "../services/auth";
+import { toast } from "react-toastify";
+import { useAuth } from "../context/authContext";
+import { routes } from "../routes/routes";
+import { useRouter } from "next/navigation";
+import usePublic from "../hooks/usePublic";
 
 const loginSchema = Yup.object().shape({
   //"Las credenciales no son las correctas o el usuario no esta registrado"
@@ -20,14 +26,30 @@ interface FormData {
   password: string;
 }
 const Login = () => {
+  usePublic();
+  const { saveUserData } = useAuth();
+  const router = useRouter();
+
   const handleOnSubmit = async (values: FormData) => {
-    console.log("Submit Exitoso", values);
+    try {
+      const res = await loginService(values);
+      toast.success("Login Exitoso");
+      //persiste los datos
+      saveUserData(res);
+      setTimeout(() => router.push(routes.dashboard), 1000);
+    } catch (error) {
+      console.warn("error al Login", error);
+      toast.error("El Login no pudo completarse ");
+    }
   };
   return (
     <div>
       <h1>Login</h1>
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={{
+          email: "lunaluna10@gmail.com",
+          password: "lunaluna10",
+        }}
         validationSchema={loginSchema}
         onSubmit={handleOnSubmit}
       >

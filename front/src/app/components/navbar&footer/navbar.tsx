@@ -1,9 +1,7 @@
 import Link from "next/link";
-import ButtonPrimary from "../buttons/buttonPrimary";
+import UserAuth from "./UserAuth";
 
 const Navbar = () => {
-  const isAuth = false; // Cambiar esto según la autenticación real
-
   return (
     <nav className="bg-blue-600 text-white shadow-md">
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center h-16">
@@ -18,7 +16,7 @@ const Navbar = () => {
           <Link href="/inicio" className="hover:text-gray-300 transition">
             Inicio
           </Link>
-          <Link href="/productos" className="hover:text-gray-300 transition">
+          <Link href="/product" className="hover:text-gray-300 transition">
             Productos
           </Link>
           <Link href="/miperfil" className="hover:text-gray-300 transition">
@@ -28,27 +26,8 @@ const Navbar = () => {
             Otro
           </Link>
         </div>
-        <div>
-          {isAuth ? (
-            <div className="flex items-center space-x-4">
-              <img
-                src="/profile.jpg"
-                alt="Perfil"
-                className="w-8 h-8 rounded-full"
-              />
-            </div>
-          ) : (
-            <div className="flex space-x-4">
-              <Link href="/login">
-                <ButtonPrimary>Iniciar Sesión</ButtonPrimary>
-              </Link>
-              <Link href="/register">
-                <ButtonPrimary>Registrarse</ButtonPrimary>
-              </Link>
-            </div>
-          )}
-        </div>
       </div>
+      <UserAuth />
     </nav>
   );
 };

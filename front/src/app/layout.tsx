@@ -3,6 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/globals.css";
 import Navbar from "./components/navbar&footer/navbar";
 import Footer from "./components/navbar&footer/footer";
+import VisibleWrapper from "./components/wrapper/visibleWrapper";
+import { Bounce, ToastContainer } from "react-toastify";
+import { AuthProvider } from "./context/authContext";
+import { CartProvider } from "./context/cartContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,12 +33,33 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
-
-        <div className="min-h-screen max-w-[90vw] m-auto py-6">{children}</div>
-
+        {" "}
+        <AuthProvider>
+          <CartProvider>
+            <VisibleWrapper>
+              <Navbar />
+            </VisibleWrapper>
+            <div className="min-h-screen max-w-[90vw] m-auto py-6">
+              {children}
+            </div>
+            <ToastContainer
+              position="top-center"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick={false}
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="dark"
+              transition={Bounce}
+            />
+          </CartProvider>
+        </AuthProvider>
         <Footer />
       </body>
     </html>
   );
 }
+//Toast container caja donde aparece el notificador
