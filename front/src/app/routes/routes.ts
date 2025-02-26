@@ -5,5 +5,5 @@ export const routes = {
   landing: "/landing",
   dashboard: "/dashboard",
   cart: "/cart",
-  home: "/home",
+  home: "/",
 };

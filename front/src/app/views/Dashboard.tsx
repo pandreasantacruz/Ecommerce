@@ -5,8 +5,10 @@ import { useAuth } from "../context/authContext";
 import { getUserOrders } from "../services/orders";
 import { IOrder } from "../types";
 import products from "../product/page";
+import usePrivate from "../hooks/usePrivate";
 
 const Dashboard = () => {
+  usePrivate();
   const [orders, setOrders] = useState<IOrder[]>();
   const { user, token, isAuth } = useAuth();
 

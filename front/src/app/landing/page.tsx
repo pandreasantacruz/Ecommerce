@@ -1,7 +1,8 @@
 import React from "react";
+import Landing from "../views/Landing";
 
-const Landing = () => {
-  return <div>Landing</div>;
+const landing = () => {
+  return <Landing />;
 };
 
-export default Landing;
+export default landing;
