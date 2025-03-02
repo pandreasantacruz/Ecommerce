@@ -46,7 +46,6 @@ export const Card: React.FC<CardProps> = ({
           {isAuth && (
             <button
               onClick={(e) => {
-                console.log("Click en botón favorito de:", name);
                 e.stopPropagation();
                 toggleFavorite({
                   id,
@@ -58,11 +57,11 @@ export const Card: React.FC<CardProps> = ({
               }}
               className="absolute top-4 right-4"
             >
-              {isFavorite ? (
-                <CiHeart className="w-6 h-6 text-red-500" />
-              ) : (
-                <CiHeart className="w-6 h-6 text-blackP" />
-              )}
+              <CiHeart
+                className={`w-6 h-6 transition-colors duration-300 ${
+                  isFavorite ? "text-red-500" : "text-gray-500"
+                }`}
+              />
             </button>
           )}
           <img

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import React from "react";
 import { useCart } from "../context/cartContext";
@@ -9,8 +8,13 @@ import { DtoOrder } from "../services/orders";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { routes } from "../routes/routes";
+import { FaHandPointDown } from "react-icons/fa";
+import Link from "next/link";
+import ButtonPrimary from "../components/buttons/buttonPrimary";
+import usePrivate from "../hooks/usePrivate";
 
 const CartView = () => {
+  usePrivate();
   const router = useRouter();
   const { cartList, removeFromCart, total, resetCart } = useCart();
   const { token, user } = useAuth();
@@ -37,21 +41,42 @@ const CartView = () => {
       toast.error("Ocurrio un error al crear la orden");
     }
   };
-
   return (
-    <div>
-      <div className="flex justify-between">
-        <h2>Carrito de Compras</h2>
-        <button disabled={total === 0} onClick={onByClick}>
-          Finalizar compra
-        </button>
+    <div className="font-poppins p-4 flex flex-col items-center">
+      <h2 className="text-3xl text-center font-bold transition-transform duration-300 hover:scale-110 py-2">
+        Carrito de Compras
+      </h2>
+      <div className="pb-4">
+        {total > 0 && (
+          <ButtonPrimary onClick={onByClick}>Finalizar compra</ButtonPrimary>
+        )}
       </div>
+
       {cartList?.length ? (
-        cartList.map((p, index) => (
-          <CartItem key={index} {...p} onRemove={() => onRemove(p.id)} />
-        ))
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 px-8 ">
+          {cartList.map((p, index) => (
+            <CartItem key={index} {...p} onRemove={() => onRemove(p.id)} />
+          ))}
+        </div>
       ) : (
-        <p>No HAY NADA EN EL CARRITO</p>
+        <div className="flex flex-col items-center justify-center py-4">
+          <h3 className="text-xl text-center font-bold transition-transform duration-300 hover:scale-110">
+            No hay productos en el carrito.
+          </h3>
+          <div className="flex items-center gap-2 transition-transform duration-300 hover:scale-110">
+            <h3 className="text-xl text-center font-bold pt-1">
+              ¿Vamos de compras?
+            </h3>
+            <FaHandPointDown />
+          </div>
+          <Link href={routes.products}>
+            <img
+              src="/carritoCompras.png"
+              alt="Carrito vacío"
+              className="w-96 transition-transform duration-300 hover:scale-110"
+            />
+          </Link>
+        </div>
       )}
     </div>
   );

@@ -32,12 +32,7 @@ const Navbar = () => {
             >
               Productos
             </Link>
-            <Link
-              href={routes.dashboard}
-              className="hover:text-blueP transition"
-            >
-              Mi Perfil
-            </Link>
+
             <Link
               href={routes.nosotros}
               className="hover:text-blueP transition"

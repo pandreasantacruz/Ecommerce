@@ -30,26 +30,27 @@ const Cards: FC<CardsProps> = ({ list }) => {
     return addToCart(items);
   };
   useEffect(() => {
-    //lo usamos en filtro
     setItems(list);
   }, [list]);
 
   return (
     <div>
       <div className="grid md:grid-cols-2 gap-8 font-poppins pt-4">
-        {items.map((items, idx) => (
+        {items.map((items, id) => (
           <Card
-            key={idx}
+            key={id}
             description={items.description}
             image={items.image}
             name={items.name}
             price={items.price}
             onClick={onClickItem(items.id)}
             onCartClick={onCartClick(items)}
-            isFavorite={!!favoriteItems[items.id]}
+            isFavorite={favoriteItems.some(
+              (fav: { id: any }) => fav.id === items.id
+            )}
             toggleFavorite={toggleFavorite}
             showDescription={false}
-            id={idx}
+            id={id}
           />
         ))}
       </div>

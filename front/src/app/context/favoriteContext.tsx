@@ -1,65 +1,66 @@
 "use client";
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useRef } from "react";
+import { toast } from "react-toastify";
 import { IProduct } from "../types";
+import "react-toastify/dist/ReactToastify.css";
+
 interface FavoriteContextProps {
   favoriteItems: IProduct[];
   toggleFavorite: (product: IProduct) => void;
 }
+
 const FavoriteContext = createContext<FavoriteContextProps | undefined>(
   undefined
 );
+
 export const FavoriteProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  const [favoriteItems, setFavoriteItems] = useState<IProduct[]>([]);
+  const [favoriteItems, setFavoriteItems] = useState<IProduct[]>(() => {
+    try {
+      const storedFavorites = localStorage.getItem("favoriteItems");
+      return storedFavorites ? JSON.parse(storedFavorites) : [];
+    } catch (error) {
+      console.error("Error al cargar favoritos desde localStorage", error);
+      return [];
+    }
+  });
+
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    const storedFavorites = localStorage.getItem("favoriteItems");
-    if (storedFavorites) {
-      try {
-        const parsedFavorites = JSON.parse(storedFavorites);
-        if (Array.isArray(parsedFavorites)) {
-          setFavoriteItems(parsedFavorites);
-        } else {
-          console.error(
-            "Error: Los favoritos en localStorage no son un array válido."
-          );
-          localStorage.removeItem("favoriteItems"); // Limpia en caso de error
-        }
-      } catch (error) {
-        console.error("Error al parsear favoritos:", error);
-        localStorage.removeItem("favoriteItems"); // Limpia en caso de error
-      }
+    if (!isFirstRender.current) {
+      localStorage.setItem("favoriteItems", JSON.stringify(favoriteItems));
     }
-  }, []);
+    isFirstRender.current = false;
+  }, [favoriteItems]);
 
   const toggleFavorite = (product: IProduct) => {
-    setFavoriteItems((prevFavorites) => {
-      const isAlreadyFavorite = prevFavorites.some(
-        (item) => item.id === product.id
-      );
+    const isAlreadyFavorite = favoriteItems.some(
+      (item) => item.id === product.id
+    );
 
-      console.log("Producto recibido en toggleFavorite:", product);
-      console.log("¿Ya es favorito?", isAlreadyFavorite);
+    const updatedFavorites = isAlreadyFavorite
+      ? favoriteItems.filter((item) => item.id !== product.id)
+      : [...favoriteItems, product];
 
-      let updatedFavorites;
+    setFavoriteItems(updatedFavorites);
+
+    setTimeout(() => {
       if (isAlreadyFavorite) {
-        updatedFavorites = prevFavorites.filter(
-          (item) => item.id !== product.id
-        );
+        toast.info(`Eliminado de favoritos: ${product.name}`, {
+          autoClose: 2000,
+        });
       } else {
-        updatedFavorites = [...prevFavorites, product]; // Solo agrega si no existe
+        toast.success(`Agregado a favoritos: ${product.name}`, {
+          autoClose: 2000,
+        });
       }
-
-      console.log("Guardando en localStorage:", updatedFavorites);
-      localStorage.setItem("favoriteItems", JSON.stringify(updatedFavorites));
-
-      return updatedFavorites;
-    });
+    }, 0);
   };
-  console.log(favoriteItems, "favoriteitem");
+
   return (
     <FavoriteContext.Provider value={{ favoriteItems, toggleFavorite }}>
       {children}
@@ -67,4 +68,10 @@ export const FavoriteProvider = ({
   );
 };
 
-export const useFavorites = () => useContext(FavoriteContext);
+export const useFavorites = () => {
+  const context = useContext(FavoriteContext);
+  if (!context) {
+    throw new Error("useFavorites must be used within a FavoriteProvider");
+  }
+  return context;
+};
