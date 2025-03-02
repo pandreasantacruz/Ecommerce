@@ -18,20 +18,24 @@ export const FavoriteProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [favoriteItems, setFavoriteItems] = useState<IProduct[]>(() => {
-    try {
-      const storedFavorites = localStorage.getItem("favoriteItems");
-      return storedFavorites ? JSON.parse(storedFavorites) : [];
-    } catch (error) {
-      console.error("Error al cargar favoritos desde localStorage", error);
-      return [];
-    }
-  });
-
+  const [favoriteItems, setFavoriteItems] = useState<IProduct[]>([]);
   const isFirstRender = useRef(true);
 
+  // ✅ Cargar favoritos solo cuando el componente esté montado en el cliente
   useEffect(() => {
-    if (!isFirstRender.current) {
+    if (typeof window !== "undefined") {
+      // Evita el error en el servidor
+      try {
+        const storedFavorites = localStorage.getItem("favoriteItems");
+        setFavoriteItems(storedFavorites ? JSON.parse(storedFavorites) : []);
+      } catch (error) {
+        console.error("Error al cargar favoritos desde localStorage", error);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isFirstRender.current && typeof window !== "undefined") {
       localStorage.setItem("favoriteItems", JSON.stringify(favoriteItems));
     }
     isFirstRender.current = false;
@@ -41,7 +45,6 @@ export const FavoriteProvider = ({
     const isAlreadyFavorite = favoriteItems.some(
       (item) => item.id === product.id
     );
-
     const updatedFavorites = isAlreadyFavorite
       ? favoriteItems.filter((item) => item.id !== product.id)
       : [...favoriteItems, product];
