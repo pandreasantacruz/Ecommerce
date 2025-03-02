@@ -1,5 +1,5 @@
 "use client";
-//Va a renderizzar eñ categoriesFILTER
+//Va a renderizzar eñ categories FILTER
 import React, { useEffect, useState } from "react";
 import Cards from "./card/Cards";
 import { IProduct } from "../types";
@@ -16,19 +16,19 @@ const ProductList: React.FC<Props> = ({ products }) => {
 
   useEffect(() => {
     const crrCategory = Number(categoryId);
-    if (!crrCategory && crrCategory !== 0) {
+
+    if (!crrCategory) {
+      setFilteredProducts(products);
       return;
     }
-    console.log(
-      "newList",
-      products?.filter((prod: IProduct) => prod.categoryId == crrCategory)
-    );
+
     setFilteredProducts(() => {
       return products?.filter(
         (prod: IProduct) => prod.categoryId == crrCategory
       );
     });
   }, [categoryId]);
+
   return <Cards list={filteredProducts} />;
 };
 

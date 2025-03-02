@@ -9,9 +9,11 @@ const Detail = async ({ params }: { params: Promise<{ id: string }> }) => {
     return <div>No existe ese producto</div>;
   }
   return (
-    <div>
-      Detalle de:
-      <ProductDetail {...product} />
+    <div className="font-poppins mx-4 py-4">
+      <h2 className="text-2xl font-bold text-center">Detalle</h2>
+      <div className="flex justify-center">
+        <ProductDetail {...product} />
+      </div>
     </div>
   );
 };

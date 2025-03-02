@@ -2,7 +2,11 @@ import React from "react";
 import Products from "../views/Products";
 
 const products = () => {
-  return <Products />;
+  return (
+    <div>
+      <Products />;
+    </div>
+  );
 };
 
 export default products;

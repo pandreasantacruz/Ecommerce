@@ -10,6 +10,7 @@ export const getProducts = async (): Promise<IProduct[]> => {
     if (!response?.data) {
       return [];
     }
+    console.log(response.data, "datos del back");
     return response.data;
   } catch (error) {
     console.log("Error al obtener los productos", error);

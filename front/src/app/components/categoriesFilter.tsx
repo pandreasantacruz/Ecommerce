@@ -8,7 +8,7 @@ interface Props {
 }
 
 const CategoriesFilter: React.FC<Props> = ({ categories }) => {
-  //console.log("Categories recibidas:", categories);
+  console.log("Categories recibidas:", categories);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -27,32 +27,47 @@ const CategoriesFilter: React.FC<Props> = ({ categories }) => {
     });
     return url.toString();
   };
+  const resetFilter = () => {
+    return router.replace(generatenewUrl(pathname, {}), {});
+  };
 
   useEffect(() => {
-    console.log("Current Category:", currentCategory);
     if (currentCategory !== null && currentCategory !== undefined) {
       router.replace(generatenewUrl(pathname, { categoryId: currentCategory }));
     }
   }, [currentCategory, pathname, router]);
 
   return (
-    <div>
-      {categories?.map((cat) => (
-        <span
-          key={cat.id}
-          onClick={() => {
-            setCurrentCategory(cat.id);
-          }}
-          style={{
-            color: cat.id == currentCategory ? "blue" : "black",
-            cursor: "pointer",
-          }}
-        >
-          {cat.name}
-        </span>
-      ))}
+    <div className="bg-blackP rounded-lg shadow-md p-4 space-y-4 font-poppins">
+      <button
+        onClick={resetFilter}
+        className="w-full py-2 bg-blackP text-white rounded-lg hover:bg-blueP transition-colors"
+      >
+        Reset Filtros
+      </button>
+      <div className="space-y-2">
+        {categories?.map((cat) => (
+          <span
+            key={cat.id}
+            onClick={() => {
+              setCurrentCategory(cat.id);
+            }}
+            className={`block py-1 px-4 rounded-lg cursor-pointer text-base transition-all duration-300 ease-in-out 
+            ${
+              cat.id === currentCategory
+                ? "bg-blueP text-white"
+                : "bg-blackP text-foreground border border-background"
+            } 
+            hover:bg-blueP hover:text-white`}
+            style={{
+              fontWeight: cat.id === currentCategory ? "bold" : "normal",
+            }}
+          >
+            {cat.name}
+          </span>
+        ))}
+      </div>
     </div>
   );
 };
-
 export default CategoriesFilter;

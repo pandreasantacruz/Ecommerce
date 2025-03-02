@@ -61,8 +61,7 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <h1>Register</h1>
+    <div className="flex flex-col items-center justify-center w-full max-w-md bg-black p-8 rounded-lg shadow-lg text-foreground ">
       <Formik
         initialValues={{
           email: "paulasantacruz45@gmail.com",
@@ -89,63 +88,92 @@ const Register = () => {
           isSubmitting,
         }) => (
           <form onSubmit={handleSubmit}>
-            <label htmlFor="name">Nombre</label>
-            <input
-              type="text"
-              name="name"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.name}
-              placeholder="Nombre y Apellido"
-            />
-            {errors.name && touched.name && errors.name}
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium">
+                Nombre:
+              </label>
+              <input
+                type="text"
+                name="name"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.name}
+                placeholder="Nombre y Apellido"
+                className="text-zinc-400  p-2  rounded-lg  bg-black"
+              />
+              {errors.name && touched.name && (
+                <p className="text-red-500 text-sm">{errors.email}</p>
+              )}
 
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              name="email"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.email}
-              placeholder="ejemplo@email.com"
-            />
-            {errors.email && touched.email && errors.email}
+              <label htmlFor="email" className="block text-sm font-medium">
+                Email:
+              </label>
+              <input
+                type="email"
+                name="email"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.email}
+                placeholder="ejemplo@email.com"
+                className="text-zinc-400  p-2  rounded-lg  bg-black"
+              />
+              {errors.email && touched.email && (
+                <p className="text-red-500 text-sm">{errors.email}</p>
+              )}
 
-            <label htmlFor="password">Contraseña</label>
-            <input
-              type="password"
-              name="password"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.password}
-              placeholder="**************"
-            />
-            {errors.password && touched.password && errors.password}
+              <label htmlFor="password" className="block text-sm font-medium">
+                Contraseña:
+              </label>
+              <input
+                type="password"
+                name="password"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
+                placeholder="**************"
+                className="text-zinc-400  p-2  rounded-lg  bg-black"
+              />
+              {errors.password && touched.password && (
+                <p className="text-red-500 text-sm">{errors.email}</p>
+              )}
 
-            <label htmlFor="address">Direccion</label>
-            <input
-              type="text"
-              name="address"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.address}
-              placeholder="Calle 1 # 25-45, Bogota - Colombia"
-            />
-            {errors.address && touched.address && errors.address}
+              <label htmlFor="address" className="block text-sm font-medium">
+                Direccion:
+              </label>
+              <input
+                type="text"
+                name="address"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.address}
+                placeholder="Calle 1 # 25-45, Bogota - Colombia"
+                className="text-zinc-400  p-2  rounded-lg  bg-black"
+              />
+              {errors.address && touched.address && (
+                <p className="text-red-500 text-sm">{errors.email}</p>
+              )}
 
-            <label htmlFor="phone">Telefono</label>
-            <input
-              type="text"
-              name="phone"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.phone}
-              placeholder="+57 321 654 96 32"
-            />
-            {errors.phone && touched.phone && errors.phone}
-            <ButtonPrimary type="submit" disabled={isSubmitting}>
-              Registrarse
-            </ButtonPrimary>
+              <label htmlFor="phone" className="block text-sm font-medium">
+                Telefono:
+              </label>
+              <input
+                type="text"
+                name="phone"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.phone}
+                placeholder="+57 321 654 96 32"
+                className="text-zinc-400  p-2  rounded-lg  bg-black"
+              />
+              {errors.phone && touched.phone && (
+                <p className="text-red-500 text-sm">{errors.email}</p>
+              )}
+            </div>
+            <div className="text-center">
+              <ButtonPrimary type="submit" disabled={isSubmitting}>
+                Registrarse
+              </ButtonPrimary>
+            </div>
           </form>
         )}
       </Formik>

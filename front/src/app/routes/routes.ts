@@ -6,4 +6,7 @@ export const routes = {
   dashboard: "/dashboard",
   cart: "/cart",
   home: "/",
+  products: "/product",
+  nosotros: "/nosotros",
+  favoritos: "/favorites",
 };

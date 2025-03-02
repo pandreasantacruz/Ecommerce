@@ -9,17 +9,18 @@ const ProductsView = async () => {
   const categories = await getCategories();
 
   return (
-    <div>
-      <div>
-        <h1>Lista de Productos</h1>
+    <div className="py-4 font-poppins">
+      <h2 className="text-3xl text-center font-bold transition-transform duration-300 hover:scale-110 ">
+        Productos
+      </h2>
+      <div className=" font-poppins grid grid-cols-[20%_80%] gap-8 ">
+        <div className="pl-6 pt-4">
+          <CategoriesFilter categories={categories} />
+        </div>
         <div>
-          <h2>Categorias</h2>
-          <div>
-            <CategoriesFilter categories={categories} />
-          </div>
+          <ProductList products={products} />
         </div>
       </div>
-      <ProductList products={products} />
     </div>
   );
 };

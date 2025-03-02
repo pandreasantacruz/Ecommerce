@@ -8,7 +8,6 @@ import products from "../product/page";
 import usePrivate from "../hooks/usePrivate";
 
 const Dashboard = () => {
-  usePrivate();
   const [orders, setOrders] = useState<IOrder[]>();
   const { user, token, isAuth } = useAuth();
 
@@ -30,7 +29,7 @@ const Dashboard = () => {
 
   return (
     //crear tabla
-    <div>
+    <div className="bg-background">
       <div>
         <h3>Usuario</h3>
       </div>

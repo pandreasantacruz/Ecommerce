@@ -9,13 +9,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        color_1: "--color-1",
-        color_2: "--color-2",
-        color_3: "--color-3",
-        color_4: "--color-4",
-        color_5: "--color-5",
+        background: "#1E1E1E",
+        foreground: "#F5F5F5",
+        blackP: "#121212",
+        amatisP: "#9F55E5",
+        blueP: "#7BB8FA",
+        grisP: "#242424",
+      },
+      fontFamily: {
+        poppins: ["var(--font-poppins)", "sans-serif"],
       },
     },
   },

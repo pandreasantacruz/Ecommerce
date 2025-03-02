@@ -4,8 +4,8 @@ export interface IProduct {
   price: number;
   description: string;
   image: string;
-  categoryId: number;
-  stock: number;
+  categoryId?: number;
+  stock?: number;
 }
 
 export interface ICategory {

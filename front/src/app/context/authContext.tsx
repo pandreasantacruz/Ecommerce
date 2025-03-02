@@ -34,8 +34,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setToken(data.token);
     //persistir datos EL LOCAL STROGA SOLO GUARDA STRINGS PARA PODER GUARDAR EL OBJETO USER SE USA JSON Y STRIGFLY QUE LO CONVIRTE EN UN STRING
     localStorage.setItem("user", JSON.stringify(data));
-    console.log("Usuario guardado en el estado:", data.user);
-    console.log("Token guardado en el estado:", data.token);
   };
   const resetUserData = () => {
     setUser(null);
@@ -44,7 +42,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
   useEffect(() => {
     const storage = localStorage.getItem("user");
-    console.log(storage, "esto es storageeeeeee");
 
     if (!storage) {
       setIsAuth(false);
